@@ -5,7 +5,7 @@
 
   window.TRIP = {
     key: 'tainan-winter-2027-v1',
-    photoVer: 1,
+    photoVer: 2,
     verifiedOn: '2026-11',
     title: T('台南・冬の小旅行', '台南冬日小旅行', 'A Winter Journey to Tainan'),
     kicker: T('古都と日本時代の建築をめぐる 3日間', '古都與日治建築的三日旅程', 'Three days of old capital and Japanese-era architecture'),

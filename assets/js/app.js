@@ -21,8 +21,11 @@
   const fmtDay = (s) => { const d = parseDate(s); return `${d.getMonth() + 1}月${d.getDate()}日（${WD[d.getDay()]}）`; };
   const dotDate = (s) => { const d = parseDate(s); return `${d.getFullYear()}.${d.getMonth() + 1}.${d.getDate()}`; };
   const isPortrait = (n) => { const p = D.photos[n]; return p && p.h > p.w; };
-  const src = (n, small) => `assets/photos/${n}${small ? '-s' : ''}.webp${V}`;
-  const srcset = (n) => `${src(n, true)} ${isPortrait(n) ? 640 : 768}w, ${src(n)} ${isPortrait(n) ? 1024 : 1536}w`;
+  // sizes: 's' small, 'm' medium, '' large (original width)
+  const src = (n, k = '') => `assets/photos/${n}${k === true ? '-s' : k ? '-' + k : ''}.webp${V}`;
+  const srcset = (n) => isPortrait(n)
+    ? `${src(n, 's')} 480w, ${src(n, 'm')} 768w, ${src(n)} 1024w`
+    : `${src(n, 's')} 640w, ${src(n, 'm')} 1024w, ${src(n)} 1536w`;
   const img = (n, sizes, extra = '') => {
     const p = D.photos[n] || {};
     return `<img src="${src(n, true)}" srcset="${srcset(n)}" sizes="${sizes}" width="${p.w || 1536}" height="${p.h || 1024}" alt="${esc(p.alt || '')}" loading="lazy" decoding="async" ${extra}>`;
@@ -73,7 +76,7 @@
   $('#ovFacts').innerHTML = facts.map(([k, a, b]) => `<dt>${k}</dt><dd><b>${esc(a)}</b><span class="zh" lang="zh-Hant">${esc(b)}</span></dd>`).join('');
   $('#ovDays').innerHTML = D.days.map((d, i) => `
     <a class="ov-day reveal" href="#itinerary" data-day="${i}" style="--c:${d.color}">
-      ${img(d.hero, '(max-width:560px) 100vw, 33vw')}
+      ${img(d.hero, '(max-width:560px) 60vw, 33vw')}
       <span class="ov-day-text"><span class="ov-day-no"><i></i>DAY ${i + 1}</span>
       <span class="ov-day-title">${esc(d.title.ja)}</span>
       <span class="ov-day-date">${fmtDay(d.date)}</span></span>
@@ -89,7 +92,7 @@
   $('#dayPanels').innerHTML = D.days.map((d, i) => `
     <div class="day-panel" role="tabpanel" id="panel-${d.id}" aria-labelledby="tab-${d.id}" style="--c:${d.color}" ${i ? 'hidden' : ''}>
       <div class="day-media">
-        <button class="day-hero" data-photo="${d.hero}" aria-label="写真を拡大">${img(d.hero, '(max-width:860px) 100vw, 40vw')}</button>
+        <button class="day-hero" data-photo="${d.hero}" aria-label="写真を拡大">${img(d.hero, '(max-width:860px) 60vw, 40vw')}</button>
         <div class="day-thumbs">${d.thumbs.map((t) => `<button data-photo="${t}" aria-label="写真を拡大">${img(t, '15vw')}</button>`).join('')}</div>
       </div>
       <div class="day-body">
@@ -171,7 +174,7 @@
   $('#spotGrid').innerHTML = D.spots.map((p) => {
     const d = D.days[p.day - 1];
     return `<article class="spot reveal" style="--c:${d.color}">
-      <button class="spot-img" data-photo="${p.photo}" aria-label="${esc(p.name.ja)}の写真を拡大">${img(p.photo, '(max-width:560px) 100vw, (max-width:860px) 50vw, 33vw')}<span class="spot-day">DAY ${p.day}</span></button>
+      <button class="spot-img" data-photo="${p.photo}" aria-label="${esc(p.name.ja)}の写真を拡大">${img(p.photo, '(max-width:560px) 60vw, (max-width:860px) 50vw, 33vw')}<span class="spot-day">DAY ${p.day}</span></button>
       <h3>${esc(p.name.ja)}</h3><span class="zh" lang="zh-Hant">${esc(p.name.zh)} · <i>${esc(p.name.en)}</i></span>
       <p>${esc(p.desc.ja)}</p>
       <div class="spot-info"><span>${esc(p.info.ja)}</span>${stBadge(p.status)}<a class="chip" href="${mapUrl(p.map)}" target="_blank" rel="noopener">地図 ↗</a></div>
@@ -186,7 +189,7 @@
   /* ---------- stay ---------- */
   const H = D.hotel;
   $('#stay-body').innerHTML = `
-    <button class="stay-photo reveal" data-photo="${H.photo}" aria-label="客室イメージを拡大">${img(H.photo, '(max-width:860px) 100vw, 50vw')}<span class="cap">イメージ（実際の客室ではありません）</span></button>
+    <button class="stay-photo reveal" data-photo="${H.photo}" aria-label="客室イメージを拡大">${img(H.photo, '(max-width:860px) 60vw, 50vw')}<span class="cap">イメージ（実際の客室ではありません）</span></button>
     <div class="reveal">
       <h3 class="stay-name">${esc(H.name.ja)}</h3><span class="en">${esc(H.name.en)}</span>
       <p class="stay-addr"><span class="zh" lang="zh-Hant">${esc(H.address)}</span><span class="en">${esc(H.addressEn)}</span></p>
@@ -232,7 +235,7 @@
   chkCount();
 
   /* ---------- gallery + lightbox ---------- */
-  $('#gal').innerHTML = D.gallery.map((g) => `<button data-photo="${g}" aria-label="${esc(D.photos[g].alt)}">${img(g, '(max-width:560px) 100vw, 33vw')}</button>`).join('');
+  $('#gal').innerHTML = D.gallery.map((g) => `<button data-photo="${g}" aria-label="${esc(D.photos[g].alt)}">${img(g, '(max-width:560px) 60vw, 33vw')}</button>`).join('');
   let lbList = D.gallery, lbIdx = 0;
   const lb = $('#lightbox');
   function lbShow(i) {
@@ -278,7 +281,7 @@
     $('#tvTitle').textContent = it.t.ja; $('#tvZh').textContent = it.t.zh;
     $('#tvNote').textContent = (it.n && it.n.ja) || '';
     const ph = it.photo || f.d.hero;
-    $('#tvBg').style.backgroundImage = `url("${src(ph, true)}")`;
+    $('#tvBg').style.backgroundImage = `url("${src(ph, 'm')}")`;
     const go = $('#tvGo');
     if (it.map) { go.hidden = false; go.href = dirUrl(it.map, it.walk ? 'walking' : 'driving'); } else { go.hidden = true; }
   }
