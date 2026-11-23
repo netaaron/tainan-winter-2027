@@ -193,7 +193,8 @@
       <h3 class="stay-name">${esc(H.name.ja)}</h3><span class="en">${esc(H.name.en)}</span>
       <p class="stay-addr"><span class="zh" lang="zh-Hant">${esc(H.address)}</span><span class="en">${esc(H.addressEn)}</span></p>
       <div class="stay-times"><div><small>CHECK-IN</small><b>${H.checkin}</b></div><div><small>CHECK-OUT</small><b>${H.checkout}</b></div><div><small>NIGHTS</small><b>${D.nights}</b></div></div>
-      <ul class="notes">${H.notes.map((n) => `<li><span>${esc(n.t.ja)}<span class="zh" lang="zh-Hant">${esc(n.t.zh)}</span></span>${stBadge(n.status)}</li>`).join('')}</ul>
+      <div class="stay-story">${H.story.map((p, i) => `<p class="${i ? '' : 'first'}">${esc(p.ja)}</p><span class="zh" lang="zh-Hant">${esc(p.zh)}</span>`).join('')}</div>
+      <p class="stay-badge"><a href="${H.michelin}" target="_blank" rel="noopener">MICHELIN Guide のホテル紹介に掲載 ↗</a></p>
       <div class="btn-row">
         <button class="btn fill" type="button" id="copyAddr">住所をコピー（中文）</button>
         <a class="btn" href="${mapUrl(H.map)}" target="_blank" rel="noopener">地図 ↗</a>
@@ -201,6 +202,12 @@
       </div>
     </div>`;
   $('#copyAddr').addEventListener('click', () => copy(H.address));
+  $('#stayReviews').innerHTML = `
+    <h3 class="rv-title">宿泊者の声<span class="zh" lang="zh-Hant">網友好評</span></h3>
+    <div class="rv-scores">${H.scores.map((s) => `<a class="rv-score reveal" href="${esc(s.u)}" target="_blank" rel="noopener"><span class="rv-num">${esc(s.score)}<small>/10</small></span><span class="rv-site">${esc(s.site)}</span><span class="rv-sub">${esc(s.note.ja)}</span></a>`).join('')}</div>
+    <div class="rv-quotes">${H.quotes.map((q) => `<figure class="rv-quote reveal"><blockquote lang="${q.lang}">${esc(q.q)}</blockquote>${q.tr.ja ? `<p class="rv-tr">${esc(q.tr.ja)}</p>` : ''}${q.tr.zh ? `<p class="zh" lang="zh-Hant">${esc(q.tr.zh)}</p>` : ''}<figcaption><a href="${esc(q.u)}" target="_blank" rel="noopener">${esc(q.who.ja)} ↗</a></figcaption></figure>`).join('')}</div>
+    <ul class="rv-praise">${H.praise.map((p) => `<li class="reveal"><b>${esc(p.k.ja)}<span class="zh" lang="zh-Hant">${esc(p.k.zh)}</span></b><p>${esc(p.d.ja)}</p><span class="zh" lang="zh-Hant">${esc(p.d.zh)}</span><a href="${esc(p.u)}" target="_blank" rel="noopener">出典 ↗</a></li>`).join('')}</ul>
+    <p class="rv-note">評価は2026年11月に各予約サイトで確認したもので、時期によって変わります。口コミは要約・抜粋です。<span class="zh" lang="zh-Hant">評分為2026年11月於各訂房網站查得，會隨時間變動；評論為摘要與節錄。</span></p>`;
 
   /* ---------- transport / tips / phrases / checklist ---------- */
   $('#trList').innerHTML = D.transport.map((t) => `<dt>${esc(t.k.ja)}<span class="zh" lang="zh-Hant">${esc(t.k.zh)}</span></dt><dd><span>${esc(t.v.ja)}<span class="zh" lang="zh-Hant">${esc(t.v.zh)}</span></span>${stBadge(t.status)}</dd>`).join('');

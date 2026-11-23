@@ -26,11 +26,28 @@
       phone: '+886-6-221-8188',
       checkin: '15:00', checkout: '11:00',
       map: '友愛街旅館 U.I.J Hotel Tainan',
-      notes: [
-        { t: T('チェックイン 15:00／チェックアウト 11:00', '入住 15:00／退房 11:00', 'Check-in 15:00 / check-out 11:00'), status: 'v' },
-        { t: T('現在の客室一覧にシングルルームはないため、ダブルを1名で利用', '目前房型表沒有單人房，改訂一大床房一人入住', 'No single rooms listed, so a double is booked for one'), status: 'c' },
-        { t: T('駐車場の有無と料金は予約時に確認', '停車位與費用訂房時確認', 'Confirm parking and its fee when booking'), status: 'c' },
-        { t: T('1階に鷲田珈琲、屋上テラス、ブックストアあり', '一樓有鷲田咖啡、頂樓露台與書店', 'Café on the ground floor, rooftop terrace and a bookstore'), status: 'v' }
+      michelin: 'https://guide.michelin.com/th/en/hotels-stays/Tainan-City/uij-hotel-hostel-15830',
+      story: [
+        T('台南の古い市場「友愛市場」のすぐ隣。朝は市場のざわめき、夜は路地の灯り。この街の暮らしのまん中に、友愛街旅館はあります。', '緊鄰台南老市場「友愛市場」。早晨是市場的喧鬧，夜裡是巷弄的燈光——友愛街旅館就在這座城市生活的正中央。', ''),
+        T('テーマは大正時代の華やかさ。といっても懐古趣味ではなく、赤レンガ、テラゾー（磨石子）、真鍮、ガラス、黒鉄といった素材そのものが主役です。台南の古い家のように、年月とともに味わいが深まる宿をめざしてつくられました。', '風格定調大正時期的輝煌，卻不一味懷舊，而是從材料下手：紅磚、磨石子、銅條、玻璃與黑鐵，希望像台南老宅一樣越住越有韻味。', ''),
+        T('チェックインで手渡されるのは、台南を紹介する一冊の本。ロビーには食の本とレコードが並ぶ24時間のライブラリー「粅粅書 BBBooks」。室内履きは台南の革靴ブランド「林果良品」とのコラボです。', '入住時會拿到一本介紹台南的書；大廳是24小時開放、以飲食書與黑膠為主的「粅粅書 BBBooks」；室內拖鞋則與台南品牌「林果良品」合作。', ''),
+        T('西向きの屋上テラスからは、旧市街の屋根の向こうに沈む夕日が見えます。よく歩いた一日の終わりに、ぜひ。', '朝西的頂樓露台，可以看夕陽沉入老城屋頂的另一端——走了一天之後，最適合在這裡收尾。', '')
+      ],
+      scores: [
+        { site: 'Hotels.com', score: '9.6', note: T('清潔さ 9.8', '清潔度 9.8', ''), u: 'https://ph.hotels.com/ho679817152/u-i-j-hotel-hostel-tainan-taiwan/' },
+        { site: 'Trip.com', score: '9.5', note: T('口コミ 387件', '387 則評價', ''), u: 'https://hk.trip.com/w/Xhs5SiZeXV2' },
+        { site: 'KAYAK', score: '9.3', note: T('評価 3,825件', '3,825 則評分', ''), u: 'https://www.nz.kayak.com/Tainan-Hotels-U-I-J-Hotel-Hostel.3592063.ksp' }
+      ],
+      quotes: [
+        { q: '洗練されたデザインの中にどこか居心地の良さを感じる', lang: 'ja', tr: T('', '在洗練的設計裡，感受到一種說不出的自在。', ''), who: T('aumo（日本の旅行メディア・宿泊レポート）', 'aumo（日本旅遊媒體・住宿心得）', ''), u: 'https://aumo.jp/articles/35448' },
+        { q: 'Beautifully designed hotel situated right in the middle of 台南.', lang: 'en', tr: T('台南のまん中にある、美しくデザインされたホテル。', '位在台南正中心、設計很美的旅館。', ''), who: T('Hotels.com の宿泊者（4泊）', 'Hotels.com 住客（住4晚）', ''), u: 'https://ph.hotels.com/ho679817152/u-i-j-hotel-hostel-tainan-taiwan/' },
+        { q: '房間設計充滿文青質感且乾淨舒適', lang: 'zh-Hant', tr: T('客室は文学的な雰囲気のデザインで、清潔で快適。', '', ''), who: T('Trip.com の宿泊者（2026年6月）', 'Trip.com 住客（2026年6月）', ''), u: 'https://hk.trip.com/w/Xhs5SiZeXV2' }
+      ],
+      praise: [
+        { k: T('立地', '地點', ''), d: T('友愛市場のすぐ隣で、国華街まで歩いて約4分。食べ歩きにも観光にも便利という声が多数。', '就在友愛市場旁，走到國華街約4分鐘，吃和逛都方便。', ''), u: 'https://ph.hotels.com/ho679817152/u-i-j-hotel-hostel-tainan-taiwan/' },
+        { k: T('清潔さ', '乾淨', ''), d: T('客室もバスルームもとても清潔、という感想がくり返し寄せられています。', '房間與浴室都很乾淨，是住客反覆提到的優點。', ''), u: 'https://www.agoda.com/u-i-j-hotel-hostel/hotel/tainan-tw.html' },
+        { k: T('屋上テラス', '頂樓露台', ''), d: T('夕方、屋上でビールを飲みながら過ごした時間がよかったという旅行者も。', '有旅客說傍晚在頂樓喝啤酒的時光特別難忘。', ''), u: 'https://ph.hotels.com/ho679817152/u-i-j-hotel-hostel-tainan-taiwan/' },
+        { k: T('細部へのこだわり', '細節用心', ''), d: T('上質なアメニティ、炭酸水と普通の水が選べる心づかいなど、細かな部分を褒める声も。', '備品講究、氣泡水與一般水都有，細節讓人印象深刻。', ''), u: 'https://vocus.cc/article/63070323fd8978000128ec13' }
       ],
       photo: 'hotel-room'
     },
@@ -209,6 +226,16 @@
     sources: [
       { t: '友愛街旅館（Trip.com：房型・入住退房）', u: 'https://hk.trip.com/w/Xhs5SiZeXV2' },
       { t: '友愛街旅館（楽天トラベル：住所・電話）', u: 'https://hotel.travel.rakuten.co.jp/hinfo/165458/' },
+      { t: 'U.I.J Hotel & Hostel（MICHELIN Guide）', u: 'https://guide.michelin.com/th/en/hotels-stays/Tainan-City/uij-hotel-hostel-15830' },
+      { t: '友愛街旅館 結合青年旅舍與設計飯店（微笑台灣：設計理念）', u: 'https://smiletaiwan.cw.com.tw/article/2676' },
+      { t: '友愛街旅館 空間設計與林果良品拖鞋（Marie Claire）', u: 'https://www.marieclaire.com.tw/lifestyle/travel/68761' },
+      { t: '粅粅書 BBBooks 與入住贈書（Marie Claire）', u: 'https://www.marieclaire.com.tw/lifestyle/travel/36068' },
+      { t: '頂樓露台與夕陽（LINE TODAY）', u: 'https://today.line.me/tw/v2/article/ZZpxqN' },
+      { t: 'U.I.J Hotel & Hostel 口コミ・評価（Hotels.com）', u: 'https://ph.hotels.com/ho679817152/u-i-j-hotel-hostel-tainan-taiwan/' },
+      { t: 'U.I.J Hotel & Hostel 評価（KAYAK）', u: 'https://www.nz.kayak.com/Tainan-Hotels-U-I-J-Hotel-Hostel.3592063.ksp' },
+      { t: 'U.I.J Hotel & Hostel 口コミのまとめ（Agoda）', u: 'https://www.agoda.com/u-i-j-hotel-hostel/hotel/tainan-tw.html' },
+      { t: '台南に泊まるならここ！（aumo 宿泊レポート）', u: 'https://aumo.jp/articles/35448' },
+      { t: '住過一次友愛更有愛（vocus 住宿心得）', u: 'https://vocus.cc/article/63070323fd8978000128ec13' },
       { t: '台南林百貨 營業時間', u: 'https://travel.yam.com/place/3533' },
       { t: '赤崁樓 門票與開放時間', u: 'https://bunnyann.tw/sajk12/' },
       { t: '台南古蹟 統一票價（赤崁樓、安平古堡、樹屋）', u: 'https://uptogo.com.tw/旅遊/赤崁樓要門票嗎？/' },
