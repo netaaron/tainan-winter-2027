@@ -338,6 +338,6 @@ html[data-theme="dark"] .st-v { color: #7FB59C; border-color: rgba(127,181,156,.
   .route-line li::after { left: 5px; top: 12px; width: 2px; height: 100%; }
   .route-line .leg { position: static; transform: none; display: block; margin-top: 2px; }
   .cover-text { top: 92px; }
-  .cover-photo img { object-position: 66% 50%; }
+  .cover-photo img { object-position: 36% 50%; }
   .travel-btn { padding: 6px 12px; }
 }
