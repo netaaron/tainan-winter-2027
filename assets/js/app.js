@@ -69,7 +69,6 @@
   $('#ovTheme').innerHTML = `<p class="ja">${esc(D.theme.ja)}</p><p class="zh" lang="zh-Hant">${esc(D.theme.zh)}</p><p class="en">${esc(D.theme.en)}</p>`;
   const facts = [
     ['日程', `${fmtDay(D.start)} — ${fmtDay(D.end)}`, `${D.days.length}日間・${D.nights}泊`],
-    ['旅のメンバー', D.travelers.ja, D.travelers.zh],
     ['移動', D.car.ja, D.car.zh],
     ['宿', D.hotel.name.ja + '（2泊）', D.hotel.name.en]
   ];

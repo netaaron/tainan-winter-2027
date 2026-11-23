@@ -12,7 +12,6 @@
     start: '2027-01-28',
     end: '2027-01-30',
     nights: 2,
-    travelers: T('日本からの大学生 2名 ＋ 台湾人ドライバー 1名', '日本女大學生 2 位 ＋ 台灣駕駛 1 位', 'Two university students from Japan and one Taiwanese driver'),
     car: T('自家用車・国道1号', '自駕・國道1號', 'By car on National Freeway 1'),
     theme: T(
       '林百貨、旧台南州庁、明治製糖の總爺、そして日本人建築家・坂茂の美術館。台南に残る「日本とのつながり」を一本の線でたどります。',
