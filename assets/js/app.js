@@ -203,23 +203,6 @@
     </div>`;
   $('#copyAddr').addEventListener('click', () => copy(H.address));
 
-  /* ---------- budget ---------- */
-  const B = D.budget, lo = B.rows.reduce((a, r) => a + r.lo, 0), hi = B.rows.reduce((a, r) => a + r.hi, 0);
-  const n = (x) => x.toLocaleString('en-US');
-  const palette = ['#24395E', '#7A4A30', '#9A8F7E', '#C23F26', '#2F5D4A', '#B88A3E', '#6E7FA3'];
-  const mid = B.rows.map((r) => (r.lo + r.hi) / 2), midSum = mid.reduce((a, b) => a + b, 0);
-  $('#budgetBody').innerHTML = `
-    <table class="btable reveal"><thead><tr><th>項目</th><th style="text-align:right">3人合計（NT$）</th></tr></thead><tbody>
-      ${B.rows.map((r) => `<tr><td>${esc(r.k.ja)}<span class="zh" lang="zh-Hant">${esc(r.k.zh)}</span>${r.how.ja ? `<span class="how">${esc(r.how.ja)}</span>` : ''}</td><td class="num">${r.lo === r.hi ? n(r.lo) : n(r.lo) + '–' + n(r.hi)}</td></tr>`).join('')}
-      <tr class="total"><td>合計 <span class="en" style="display:inline">Total</span></td><td class="num">${n(lo)}–${n(hi)}</td></tr>
-    </tbody></table>
-    <div class="bsum reveal"><small>1人あたりの目安 · 每人約</small>
-      <p class="big">NT$${n(Math.round(lo / 3 / 100) * 100)}<span> – </span>${n(Math.round(hi / 3 / 100) * 100)}</p>
-      <p>${esc(B.note.ja)}<span class="zh" lang="zh-Hant">${esc(B.note.zh)}</span></p>
-      <div class="bbar" role="img" aria-label="費用の内訳（中央値）">${mid.map((m, i) => `<i style="width:${(m / midSum * 100).toFixed(1)}%;background:${palette[i]}"></i>`).join('')}</div>
-      <ul class="bkey">${B.rows.map((r, i) => `<li><i style="background:${palette[i]}"></i>${esc(r.k.ja)}</li>`).join('')}</ul>
-    </div>`;
-
   /* ---------- transport / tips / phrases / checklist ---------- */
   $('#trList').innerHTML = D.transport.map((t) => `<dt>${esc(t.k.ja)}<span class="zh" lang="zh-Hant">${esc(t.k.zh)}</span></dt><dd><span>${esc(t.v.ja)}<span class="zh" lang="zh-Hant">${esc(t.v.zh)}</span></span>${stBadge(t.status)}</dd>`).join('');
   $('#tipGrid').innerHTML = D.tips.map((t, i) => `<div class="tip reveal"><span class="tip-no">${String(i + 1).padStart(2, '0')}</span><h3>${esc(t.t.ja)}</h3><p>${esc(t.d.ja)}</p><span class="zh" lang="zh-Hant">${esc(t.d.zh)}</span>${stBadge(t.status)}</div>`).join('');
