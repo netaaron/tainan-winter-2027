@@ -32,7 +32,7 @@
       ],
       notes: [
         { t: T('チェックイン 15:00／チェックアウト 11:00', '入住 15:00／退房 11:00', 'Check-in 15:00 / check-out 11:00'), status: 'v' },
-        { t: T('現在の客室一覧にシングルルームはないため、ドライバーはダブルを1名で利用', '目前房型表沒有單人房，駕駛訂一大床房一人入住', 'No single rooms listed, so the driver books a double for one'), status: 'c' },
+        { t: T('現在の客室一覧にシングルルームはないため、ダブルを1名で利用', '目前房型表沒有單人房，改訂一大床房一人入住', 'No single rooms listed, so a double is booked for one'), status: 'c' },
         { t: T('駐車場の有無と料金は予約時に確認', '停車位與費用訂房時確認', 'Confirm parking and its fee when booking'), status: 'c' },
         { t: T('1階に鷲田珈琲、屋上テラス、ブックストアあり', '一樓有鷲田咖啡、頂樓露台與書店', 'Café on the ground floor, rooftop terrace and a bookstore'), status: 'v' }
       ],
