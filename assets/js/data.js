@@ -27,8 +27,8 @@
       checkin: '15:00', checkout: '11:00',
       map: '友愛街旅館 U.I.J Hotel Tainan',
       rooms: [
-        { who: T('女性 2名', '女生 2 位', 'Two women'), type: T('ツイン（友致客房・二小床／26㎡）', '雙床房（友致客房－二小床／26㎡）', 'Twin room, 26 m²'), status: 'v' },
-        { who: T('ドライバー 1名', '駕駛 1 位', 'Driver'), type: T('ダブル1名利用（友致客房・一大床）', '一大床房一人入住（友致客房－一大床）', 'Double room, single use'), status: 'c' }
+        { type: T('ツイン（友致客房・二小床／26㎡）', '雙床房（友致客房－二小床／26㎡）', 'Twin room, 26 m²'), status: 'v' },
+        { type: T('ダブル1名利用（友致客房・一大床）', '一大床房一人入住（友致客房－一大床）', 'Double room, single use'), status: 'c' }
       ],
       notes: [
         { t: T('チェックイン 15:00／チェックアウト 11:00', '入住 15:00／退房 11:00', 'Check-in 15:00 / check-out 11:00'), status: 'v' },

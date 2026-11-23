@@ -193,7 +193,7 @@
       <h3 class="stay-name">${esc(H.name.ja)}</h3><span class="en">${esc(H.name.en)}</span>
       <p class="stay-addr"><span class="zh" lang="zh-Hant">${esc(H.address)}</span><span class="en">${esc(H.addressEn)}</span></p>
       <div class="stay-times"><div><small>CHECK-IN</small><b>${H.checkin}</b></div><div><small>CHECK-OUT</small><b>${H.checkout}</b></div><div><small>NIGHTS</small><b>${D.nights}</b></div></div>
-      <div class="rooms">${H.rooms.map((r) => `<div class="room"><small>${esc(r.who.ja)}</small><b>${esc(r.type.ja)}<span class="zh" lang="zh-Hant">${esc(r.type.zh)}</span></b>${stBadge(r.status)}</div>`).join('')}</div>
+      <div class="rooms">${H.rooms.map((r) => `<div class="room"><b>${esc(r.type.ja)}<span class="zh" lang="zh-Hant">${esc(r.type.zh)}</span></b>${stBadge(r.status)}</div>`).join('')}</div>
       <ul class="notes">${H.notes.map((n) => `<li><span>${esc(n.t.ja)}<span class="zh" lang="zh-Hant">${esc(n.t.zh)}</span></span>${stBadge(n.status)}</li>`).join('')}</ul>
       <div class="btn-row">
         <button class="btn fill" type="button" id="copyAddr">住所をコピー（中文）</button>

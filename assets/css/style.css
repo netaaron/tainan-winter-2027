@@ -203,8 +203,7 @@ html[data-theme="dark"] .st-v { color: #7FB59C; border-color: rgba(127,181,156,.
 .stay-times small { display: block; font-size: 12px; color: var(--muted); letter-spacing: .1em; }
 .stay-times b { font: 400 28px/1.2 var(--num); }
 .rooms { display: grid; gap: 10px; margin-bottom: 18px; }
-.room { display: grid; grid-template-columns: 96px 1fr auto; gap: 12px; align-items: center; padding: 12px 14px; border: 1px solid var(--line); border-radius: var(--r); }
-.room small { color: var(--muted); font-size: 12.5px; }
+.room { display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center; padding: 12px 14px; border: 1px solid var(--line); border-radius: var(--r); }
 .room b { font: 600 15px/1.45 var(--serif); }
 .notes { list-style: none; margin: 0 0 18px; padding: 0; font-size: 14px; }
 .notes li { padding: 8px 0; border-bottom: 1px dashed var(--line); display: flex; gap: 10px; justify-content: space-between; align-items: baseline; }
@@ -338,8 +337,6 @@ html[data-theme="dark"] .st-v { color: #7FB59C; border-color: rgba(127,181,156,.
   .route-line li::before { left: 0; top: 4px; margin-left: 0; }
   .route-line li::after { left: 5px; top: 12px; width: 2px; height: 100%; }
   .route-line .leg { position: static; transform: none; display: block; margin-top: 2px; }
-  .room { grid-template-columns: 1fr auto; }
-  .room small { grid-column: 1 / -1; }
   .cover-text { top: 92px; }
   .cover-photo img { object-position: 66% 50%; }
   .travel-btn { padding: 6px 12px; }
