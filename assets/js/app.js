@@ -18,6 +18,9 @@
 
   /* ---------- helpers ---------- */
   const parseDate = (s) => { const [y, m, d] = s.split('-').map(Number); return new Date(y, m - 1, d); };
+  const MO = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const WE = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  const enDay = (s) => { const d = parseDate(s); return `${WE[d.getDay()]} ${MO[d.getMonth()]} ${d.getDate()}`; };
   const fmtDay = (s) => { const d = parseDate(s); return `${d.getMonth() + 1}月${d.getDate()}日（${WD[d.getDay()]}）`; };
   const dotDate = (s) => { const d = parseDate(s); return `${d.getFullYear()}.${d.getMonth() + 1}.${d.getDate()}`; };
   const isPortrait = (n) => { const p = D.photos[n]; return p && p.h > p.w; };
@@ -35,6 +38,9 @@
     if (s === 'c') return `<span class="st st-c" title="出発前に確認">要確認</span>`;
     return `<span class="st st-e">目安</span>`;
   };
+  // English line under Japanese text; Chinese only for local names that differ from the Japanese
+  const EN = (o, cls = 'ed') => (o && o.en ? `<span class="${cls}" lang="en">${esc(o.en)}</span>` : '');
+  const zhName = (o) => (o && o.zh && o.zh !== o.ja ? `<span class="zh-n" lang="zh-Hant">${esc(o.zh)}</span>` : '');
   const mapUrl = (q) => 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(q);
   const dirUrl = (dest, mode = 'driving', origin, waypoints) => {
     let u = 'https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(dest) + '&travelmode=' + mode;
@@ -66,24 +72,24 @@
   $('#coverDates').innerHTML = `<b>${dotDate(D.start)}</b> ${WD[s.getDay()]} — <b>${e.getMonth() + 1}.${e.getDate()}</b> ${WD[e.getDay()]}`;
 
   /* ---------- overview ---------- */
-  $('#ovTheme').innerHTML = `<p class="ja">${esc(D.theme.ja)}</p><p class="zh" lang="zh-Hant">${esc(D.theme.zh)}</p><p class="en">${esc(D.theme.en)}</p>`;
+  $('#ovTheme').innerHTML = `<p class="ja">${esc(D.theme.ja)}</p><p class="ed" lang="en">${esc(D.theme.en)}</p>`;
   const facts = [
-    ['日程', `${fmtDay(D.start)} — ${fmtDay(D.end)}`, `${D.days.length}日間・${D.nights}泊`],
-    ['移動', D.car.ja, D.car.zh],
-    ['宿', D.hotel.name.ja + '（2泊）', D.hotel.name.en]
+    ['日程', 'Dates', `${fmtDay(D.start)} — ${fmtDay(D.end)}・${D.days.length}日間 ${D.nights}泊`, `${enDay(D.start)} – ${enDay(D.end)}, ${parseDate(D.end).getFullYear()} · ${D.days.length} days, ${D.nights} nights`],
+    ['移動', 'Travel', D.car.ja, D.car.en],
+    ['宿', 'Stay', D.hotel.name.ja + '（2泊）', D.hotel.name.en + ' (2 nights)']
   ];
-  $('#ovFacts').innerHTML = facts.map(([k, a, b]) => `<dt>${k}</dt><dd><b>${esc(a)}</b><span class="zh" lang="zh-Hant">${esc(b)}</span></dd>`).join('');
+  $('#ovFacts').innerHTML = facts.map(([k, ke, a, b]) => `<dt>${k}<small lang="en">${ke}</small></dt><dd><b>${esc(a)}</b><span class="ed" lang="en">${esc(b)}</span></dd>`).join('');
   $('#ovDays').innerHTML = D.days.map((d, i) => `
     <a class="ov-day reveal" href="#itinerary" data-day="${i}" style="--c:${d.color}">
       ${img(d.hero, '(max-width:560px) 60vw, 33vw')}
       <span class="ov-day-text"><span class="ov-day-no"><i></i>DAY ${i + 1}</span>
-      <span class="ov-day-title">${esc(d.title.ja)}</span>
+      <span class="ov-day-title">${esc(d.title.ja)}</span><span class="ov-day-en" lang="en">${esc(d.title.en)}</span>
       <span class="ov-day-date">${fmtDay(d.date)}</span></span>
     </a>`).join('');
   $$('.ov-day').forEach((a) => a.addEventListener('click', () => selectDay(+a.dataset.day)));
 
   /* ---------- itinerary ---------- */
-  $('#legend').innerHTML = `${stBadge('v')}<span>${D.verifiedOn.replace('-', '年')}月に確認</span>${stBadge('e')}<span>目安・予定</span>${stBadge('c')}<span>出発前に確認</span><span>○ をタップすると済みにできます</span>`;
+  $('#legend').innerHTML = `${stBadge('v')}<span>${D.verifiedOn.replace('-', '年')}月に確認 <i lang="en">checked Nov 2026</i></span>${stBadge('e')}<span>目安・予定 <i lang="en">estimate</i></span>${stBadge('c')}<span>出発前に確認 <i lang="en">check before the trip</i></span><span>○ をタップすると済みに <i lang="en">tap ○ to mark done</i></span>`;
   $('#dayTabs').innerHTML = D.days.map((d, i) => `
     <button class="day-tab" role="tab" id="tab-${d.id}" aria-controls="panel-${d.id}" aria-selected="${i === 0}" style="--c:${d.color}" data-i="${i}">
       <small>DAY ${i + 1} · ${parseDate(d.date).getMonth() + 1}/${parseDate(d.date).getDate()} ${WD[parseDate(d.date).getDay()]}</small><b>${esc(d.title.ja)}</b><span class="bar"></span>
@@ -97,27 +103,26 @@
       <div class="day-body">
         <div class="day-head">
           <p class="date">DAY ${i + 1} — ${fmtDay(d.date)}</p>
-          <h3>${esc(d.title.ja)}</h3><span class="zh" lang="zh-Hant">${esc(d.title.zh)}</span>
-          <p class="lead">${esc(d.lead.ja)}</p><span class="zh" lang="zh-Hant">${esc(d.lead.zh)}</span>
+          <h3>${esc(d.title.ja)}</h3>${EN(d.title, 'en')}
+          <p class="lead">${esc(d.lead.ja)}</p>${EN(d.lead)}
         </div>
-        <div class="day-meta"><span>${esc(d.drive.ja)}</span><span class="prog" data-prog="${d.id}"></span></div>
+        <div class="day-meta"><span>${esc(d.drive.ja)}<i lang="en">${esc(d.drive.en)}</i></span><span class="prog" data-prog="${d.id}"></span></div>
         <ol class="tl">${d.items.map((it, k) => {
           const id = `${d.id}-${k}`;
-          const more = it.d && (it.d.ja || it.d.zh);
+          const more = it.d && it.d.ja;
           return `<li class="tl-item${it.drive ? ' drive' : ''}${state.done[id] ? ' done' : ''}" data-id="${id}">
             <span class="tl-time">${it.time}</span>
             <span class="tl-dot"><input type="checkbox" aria-label="${esc(it.t.ja)} 済み" ${state.done[id] ? 'checked' : ''}></span>
             <div class="tl-body">
               <h4>${esc(it.t.ja)}${stBadge(it.status)}</h4>
-              <span class="zh" lang="zh-Hant">${esc(it.t.zh)}${it.t.en ? ' · <i class="en-i">' + esc(it.t.en) + '</i>' : ''}</span>
-              ${it.n && it.n.ja ? `<p>${esc(it.n.ja)}</p>` : ''}
-              ${it.n && it.n.zh ? `<span class="zh" lang="zh-Hant">${esc(it.n.zh)}</span>` : ''}
+              <span class="tl-sub"><i class="en-i" lang="en">${esc(it.t.en)}</i></span>
+              ${it.n && it.n.ja ? `<p>${esc(it.n.ja)}</p>${EN(it.n)}` : ''}
               ${(it.map || more || it.photo) ? `<div class="tl-tools">
                 ${more ? `<button class="chip js-more" aria-expanded="false">詳しく ＋</button>` : ''}
                 ${it.photo ? `<button class="chip" data-photo="${it.photo}">写真</button>` : ''}
                 ${it.map ? `<a class="chip" href="${mapUrl(it.map)}" target="_blank" rel="noopener">地図 ↗</a>` : ''}
               </div>` : ''}
-              ${more ? `<div class="tl-more" hidden><div>${esc(it.d.ja)}</div><span class="zh" lang="zh-Hant">${esc(it.d.zh)}</span></div>` : ''}
+              ${more ? `<div class="tl-more" hidden><div>${esc(it.d.ja)}</div>${EN(it.d)}</div>` : ''}
             </div>
           </li>`;
         }).join('')}</ol>
@@ -164,7 +169,7 @@
     const url = dirUrl(q[q.length - 1], r.mode, q[0], q.slice(1, -1));
     return `<div class="route-card reveal" style="--c:${d.color}">
       <div class="route-day"><span>DAY ${di + 1} · ${parseDate(d.date).getMonth() + 1}/${parseDate(d.date).getDate()}</span><b>${esc(d.title.ja)}</b></div>
-      <ol class="route-line">${r.stops.map((x, k) => `<li>${esc(x.ja)}<span class="zh" lang="zh-Hant">${esc(x.zh)}</span>${r.legs[k] ? `<span class="leg">${esc(r.legs[k])}</span>` : ''}</li>`).join('')}</ol>
+      <ol class="route-line">${r.stops.map((x, k) => `<li>${esc(x.ja)}<span class="en-s" lang="en">${esc(x.en)}</span>${r.legs[k] ? `<span class="leg">${esc(r.legs[k])}</span>` : ''}</li>`).join('')}</ol>
       <a class="btn route-go" href="${url}" target="_blank" rel="noopener">Google マップでルート ↗</a>
     </div>`;
   }).join('');
@@ -174,16 +179,16 @@
     const d = D.days[p.day - 1];
     return `<article class="spot reveal" style="--c:${d.color}">
       <button class="spot-img" data-photo="${p.photo}" aria-label="${esc(p.name.ja)}の写真を拡大">${img(p.photo, '(max-width:560px) 60vw, (max-width:860px) 50vw, 33vw')}<span class="spot-day">DAY ${p.day}</span></button>
-      <h3>${esc(p.name.ja)}</h3><span class="zh" lang="zh-Hant">${esc(p.name.zh)} · <i>${esc(p.name.en)}</i></span>
-      <p>${esc(p.desc.ja)}</p>
-      <div class="spot-info"><span>${esc(p.info.ja)}</span>${stBadge(p.status)}<a class="chip" href="${mapUrl(p.map)}" target="_blank" rel="noopener">地図 ↗</a></div>
+      <h3>${esc(p.name.ja)}</h3><span class="name-sub"><i lang="en">${esc(p.name.en)}</i>${zhName(p.name)}</span>
+      <p>${esc(p.desc.ja)}</p>${EN(p.desc)}
+      <div class="spot-info"><span>${esc(p.info.ja)}${p.info.en && p.info.en !== p.info.ja ? `<i lang="en">${esc(p.info.en)}</i>` : ''}</span>${stBadge(p.status)}<a class="chip" href="${mapUrl(p.map)}" target="_blank" rel="noopener">地図 ↗</a></div>
     </article>`;
   }).join('');
 
   /* ---------- food ---------- */
   $('#foodRow').innerHTML = D.food.map((f) => `
     <figure class="dish reveal"><button data-photo="${f.photo}" aria-label="${esc(f.name.ja)}の写真を拡大">${img(f.photo, '(max-width:560px) 50vw, 20vw')}</button>
-    <figcaption><h3>${esc(f.name.ja)}</h3><span class="zh" lang="zh-Hant">${esc(f.name.zh)} · <i>${esc(f.name.en)}</i></span><p>${esc(f.desc.ja)}</p></figcaption></figure>`).join('');
+    <figcaption><h3>${esc(f.name.ja)}</h3><span class="name-sub"><i lang="en">${esc(f.name.en)}</i></span><p>${esc(f.desc.ja)}</p>${EN(f.desc)}</figcaption></figure>`).join('');
 
   /* ---------- stay ---------- */
   const H = D.hotel;
@@ -193,8 +198,8 @@
       <h3 class="stay-name">${esc(H.name.ja)}</h3><span class="en">${esc(H.name.en)}</span>
       <p class="stay-addr"><span class="zh" lang="zh-Hant">${esc(H.address)}</span><span class="en">${esc(H.addressEn)}</span></p>
       <div class="stay-times"><div><small>CHECK-IN</small><b>${H.checkin}</b></div><div><small>CHECK-OUT</small><b>${H.checkout}</b></div><div><small>NIGHTS</small><b>${D.nights}</b></div></div>
-      <div class="stay-story">${H.story.map((p, i) => `<p class="${i ? '' : 'first'}">${esc(p.ja)}</p><span class="zh" lang="zh-Hant">${esc(p.zh)}</span>`).join('')}</div>
-      <p class="stay-badge"><a href="${H.michelin}" target="_blank" rel="noopener">MICHELIN Guide のホテル紹介に掲載 ↗</a></p>
+      <div class="stay-story">${H.story.map((p, i) => `<p class="${i ? '' : 'first'}">${esc(p.ja)}</p>${EN(p)}`).join('')}</div>
+      <p class="stay-badge"><a href="${H.michelin}" target="_blank" rel="noopener">MICHELIN Guide のホテル紹介に掲載 <i lang="en">Featured in the MICHELIN Guide</i> ↗</a></p>
       <div class="btn-row">
         <button class="btn fill" type="button" id="copyAddr">住所をコピー（中文）</button>
         <a class="btn" href="${mapUrl(H.map)}" target="_blank" rel="noopener">地図 ↗</a>
@@ -203,21 +208,21 @@
     </div>`;
   $('#copyAddr').addEventListener('click', () => copy(H.address));
   $('#stayReviews').innerHTML = `
-    <h3 class="rv-title">宿泊者の声<span class="zh" lang="zh-Hant">網友好評</span></h3>
-    <div class="rv-scores">${H.scores.map((s) => `<a class="rv-score reveal" href="${esc(s.u)}" target="_blank" rel="noopener"><span class="rv-num">${esc(s.score)}<small>/10</small></span><span class="rv-site">${esc(s.site)}</span><span class="rv-sub">${esc(s.note.ja)}</span></a>`).join('')}</div>
-    <div class="rv-quotes">${H.quotes.map((q) => `<figure class="rv-quote reveal"><blockquote lang="${q.lang}">${esc(q.q)}</blockquote>${q.tr.ja ? `<p class="rv-tr">${esc(q.tr.ja)}</p>` : ''}${q.tr.zh ? `<p class="zh" lang="zh-Hant">${esc(q.tr.zh)}</p>` : ''}<figcaption><a href="${esc(q.u)}" target="_blank" rel="noopener">${esc(q.who.ja)} ↗</a></figcaption></figure>`).join('')}</div>
-    <ul class="rv-praise">${H.praise.map((p) => `<li class="reveal"><b>${esc(p.k.ja)}<span class="zh" lang="zh-Hant">${esc(p.k.zh)}</span></b><p>${esc(p.d.ja)}</p><span class="zh" lang="zh-Hant">${esc(p.d.zh)}</span><a href="${esc(p.u)}" target="_blank" rel="noopener">出典 ↗</a></li>`).join('')}</ul>
-    <p class="rv-note">評価は2026年11月に各予約サイトで確認したもので、時期によって変わります。口コミは要約・抜粋です。<span class="zh" lang="zh-Hant">評分為2026年11月於各訂房網站查得，會隨時間變動；評論為摘要與節錄。</span></p>`;
+    <h3 class="rv-title">宿泊者の声<span class="en" lang="en">Guest reviews</span></h3>
+    <div class="rv-scores">${H.scores.map((s) => `<a class="rv-score reveal" href="${esc(s.u)}" target="_blank" rel="noopener"><span class="rv-num">${esc(s.score)}<small>/10</small></span><span class="rv-site">${esc(s.site)}</span><span class="rv-sub">${esc(s.note.ja)}</span><span class="rv-sub" lang="en">${esc(s.note.en)}</span></a>`).join('')}</div>
+    <div class="rv-quotes">${H.quotes.map((q) => `<figure class="rv-quote reveal"><blockquote lang="${q.lang}">${esc(q.q)}</blockquote>${q.lang !== 'ja' && q.tr.ja ? `<p class="rv-tr">${esc(q.tr.ja)}</p>` : ''}${q.lang !== 'en' ? EN(q.tr) : ''}<figcaption><a href="${esc(q.u)}" target="_blank" rel="noopener">${esc(q.who.ja)} ↗</a>${EN(q.who, 'en-s')}</figcaption></figure>`).join('')}</div>
+    <ul class="rv-praise">${H.praise.map((p) => `<li class="reveal"><b>${esc(p.k.ja)}<i lang="en">${esc(p.k.en)}</i></b><p>${esc(p.d.ja)}</p>${EN(p.d)}<a href="${esc(p.u)}" target="_blank" rel="noopener">出典 ↗</a></li>`).join('')}</ul>
+    <p class="rv-note">評価は2026年11月に各予約サイトで確認したもので、時期によって変わります。口コミは要約・抜粋です。<span class="ed" lang="en">Scores were checked on each booking site in November 2026 and change over time. Reviews are summarised or excerpted.</span></p>`;
 
   /* ---------- transport / tips / phrases / checklist ---------- */
-  $('#trList').innerHTML = D.transport.map((t) => `<dt>${esc(t.k.ja)}<span class="zh" lang="zh-Hant">${esc(t.k.zh)}</span></dt><dd><span>${esc(t.v.ja)}<span class="zh" lang="zh-Hant">${esc(t.v.zh)}</span></span>${stBadge(t.status)}</dd>`).join('');
-  $('#tipGrid').innerHTML = D.tips.map((t, i) => `<div class="tip reveal"><span class="tip-no">${String(i + 1).padStart(2, '0')}</span><h3>${esc(t.t.ja)}</h3><p>${esc(t.d.ja)}</p><span class="zh" lang="zh-Hant">${esc(t.d.zh)}</span>${stBadge(t.status)}</div>`).join('');
+  $('#trList').innerHTML = D.transport.map((t) => `<dt>${esc(t.k.ja)}<span class="en-s" lang="en">${esc(t.k.en)}</span></dt><dd><span>${esc(t.v.ja)}${EN(t.v)}</span>${stBadge(t.status)}</dd>`).join('');
+  $('#tipGrid').innerHTML = D.tips.map((t, i) => `<div class="tip reveal"><span class="tip-no">${String(i + 1).padStart(2, '0')}</span><h3>${esc(t.t.ja)}</h3>${EN(t.t, 'en')}<p>${esc(t.d.ja)}</p>${EN(t.d)}${stBadge(t.status)}</div>`).join('');
   $('#phrGrid').innerHTML = D.phrases.map((p, i) => `<button class="phr" type="button" data-i="${i}"><span class="ja">${esc(p.ja)}</span><span class="zhb" lang="zh-Hant">${esc(p.zh)}</span><span class="py">${esc(p.py)}</span></button>`).join('');
   $('#phrGrid').addEventListener('click', (ev) => { const b = ev.target.closest('.phr'); if (!b) return; const p = D.phrases[+b.dataset.i]; $('#pbZh').textContent = p.zh; $('#pbPy').textContent = p.py; $('#pbJa').textContent = p.ja; $('#phrBig').hidden = false; });
   $('#phrBig').addEventListener('click', () => { $('#phrBig').hidden = true; });
 
-  $('#chkGrid').innerHTML = D.checklist.map((g, gi) => `<div class="chk-group"><h3><span>${esc(g.g.ja)} <span class="zh" lang="zh-Hant" style="display:inline">${esc(g.g.zh)}</span></span><small data-cnt="${gi}"></small></h3>
-    ${g.items.map((it, k) => { const id = `c${gi}-${k}`; return `<label><input type="checkbox" data-id="${id}" ${state.chk[id] ? 'checked' : ''}><span>${esc(it.ja)}<span class="zh" lang="zh-Hant">${esc(it.zh)}</span></span></label>`; }).join('')}</div>`).join('');
+  $('#chkGrid').innerHTML = D.checklist.map((g, gi) => `<div class="chk-group"><h3><span>${esc(g.g.ja)} <i lang="en">${esc(g.g.en)}</i></span><small data-cnt="${gi}"></small></h3>
+    ${g.items.map((it, k) => { const id = `c${gi}-${k}`; return `<label><input type="checkbox" data-id="${id}" ${state.chk[id] ? 'checked' : ''}><span>${esc(it.ja)}${EN(it, 'en-s')}</span></label>`; }).join('')}</div>`).join('');
   const chkCount = () => D.checklist.forEach((g, gi) => { const k = g.items.filter((_, j) => state.chk[`c${gi}-${j}`]).length; $(`[data-cnt="${gi}"]`).textContent = `${k} / ${g.items.length}`; });
   $('#chkGrid').addEventListener('change', (ev) => { const id = ev.target.dataset.id; if (!id) return; if (ev.target.checked) state.chk[id] = 1; else delete state.chk[id]; save(); chkCount(); });
   chkCount();
@@ -248,12 +253,12 @@
 
   /* ---------- sources ---------- */
   $('#srcBody').innerHTML = `<div class="src-legend">
-      <p>${stBadge('v')}<span>${D.verifiedOn.replace('-', '年')}月にウェブで確認した情報。</span></p>
-      <p>${stBadge('e')}<span>計算や一般的な情報からの目安。</span></p>
-      <p>${stBadge('c')}<span>情報源によって違う、または変わりやすいため出発前に確認。</span></p>
-      <p><span>写真はすべて AI 生成のイメージで、実際の景色・客室とは異なります。</span></p>
+      <p>${stBadge('v')}<span>${D.verifiedOn.replace('-', '年')}月にウェブで確認した情報。<i lang="en">Checked online in November 2026.</i></span></p>
+      <p>${stBadge('e')}<span>計算や一般的な情報からの目安。<i lang="en">An estimate from calculation or general information.</i></span></p>
+      <p>${stBadge('c')}<span>情報源によって違う、または変わりやすいため出発前に確認。<i lang="en">Sources differ or it changes often, so check before the trip.</i></span></p>
+      <p><span>写真はすべて AI 生成のイメージで、実際の景色・客室とは異なります。<i lang="en">All photos are AI-generated illustrations, not the actual places or rooms.</i></span></p>
     </div>
-    <ol class="src-list">${D.sources.map((s) => `<li><a href="${esc(s.u)}" target="_blank" rel="noopener">${esc(s.t)}</a></li>`).join('')}</ol>`;
+    <ol class="src-list">${D.sources.map((s) => `<li><a href="${esc(s.u)}" target="_blank" rel="noopener">${esc(s.t)}</a>${s.en ? `<span class="en-s" lang="en">${esc(s.en)}</span>` : ''}</li>`).join('')}</ol>`;
 
   /* ---------- travel mode ---------- */
   const flat = [];
@@ -266,7 +271,7 @@
     $('#tvLabel').textContent = tvIdx === pickNow() ? (before ? '最初の予定' : '次の予定') : '予定';
     $('#tvDay').textContent = `DAY ${f.i + 1} · ${fmtDay(f.d.date)}`;
     $('#tvTime').textContent = it.time;
-    $('#tvTitle').textContent = it.t.ja; $('#tvZh').textContent = it.t.zh;
+    $('#tvTitle').textContent = it.t.ja; $('#tvEn').textContent = it.t.en || '';
     $('#tvNote').textContent = (it.n && it.n.ja) || '';
     const ph = it.photo || f.d.hero;
     $('#tvBg').style.backgroundImage = `url("${src(ph, 'm')}")`;

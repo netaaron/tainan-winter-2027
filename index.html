@@ -3,15 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>台南・冬の小旅行 2027｜台南冬日小旅行</title>
+<title>台南・冬の小旅行 2027 | A Winter Journey to Tainan</title>
 <meta name="description" content="2027年1月28日〜30日、台南3日間・2泊の旅のしおり。日本時代の建築、古都の街歩き、安平の夕日、麻豆の總爺藝文中心。">
 <meta name="theme-color" content="#F5F0E6" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#121722" media="(prefers-color-scheme: dark)">
 <meta property="og:title" content="台南・冬の小旅行 2027">
-<meta property="og:description" content="古都と日本時代の建築をめぐる 3日間">
+<meta property="og:description" content="古都と日本時代の建築をめぐる 3日間 · Three days of old capital and Japanese-era architecture">
 <meta property="og:image" content="assets/photos/cover-day.webp">
 <link rel="preload" href="assets/fonts/serif-jp.woff2?v=2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="assets/css/style.css?v=9">
+<link rel="stylesheet" href="assets/css/style.css?v=10">
 <script>
   (function(){try{var s=localStorage.getItem('tainan-winter-2027-theme');var d=s?s==='dark':matchMedia('(prefers-color-scheme: dark)').matches;document.documentElement.dataset.theme=d?'dark':'light';}catch(e){}})();
 </script>
@@ -45,14 +45,14 @@
       <p class="cover-kicker"><span>TAINAN</span><span class="dot"></span><span>WINTER 2027</span></p>
       <h1 class="cover-title"><span class="brush">台南</span><span class="cover-sub">冬の小旅行</span></h1>
       <p class="cover-dates" id="coverDates"></p>
-      <p class="cover-zh" lang="zh-Hant">台南冬日小旅行・三日兩夜</p>
       <p class="cover-en">A winter journey to Tainan · 3 days, 2 nights</p>
+      <p class="cover-zh" lang="zh-Hant">台南冬日小旅行・三日兩夜</p>
     </div>
     <a class="cover-scroll" href="#overview" aria-label="下へ">↓</a>
   </section>
 
   <section class="sec overview" id="overview">
-    <header class="sec-head"><p class="sec-no">01</p><h2>旅の概要</h2><p class="sec-sub"><span lang="zh-Hant">旅行概要</span> · Overview</p></header>
+    <header class="sec-head"><p class="sec-no">01</p><h2>旅の概要</h2><p class="sec-sub" lang="en">Overview</p></header>
     <div class="ov-grid">
       <div class="ov-theme" id="ovTheme"></div>
       <dl class="ov-facts" id="ovFacts"></dl>
@@ -61,70 +61,70 @@
   </section>
 
   <section class="sec itinerary" id="itinerary">
-    <header class="sec-head"><p class="sec-no">02</p><h2>三日間の旅程</h2><p class="sec-sub"><span lang="zh-Hant">三日行程</span> · Itinerary</p></header>
+    <header class="sec-head"><p class="sec-no">02</p><h2>三日間の旅程</h2><p class="sec-sub" lang="en">Itinerary</p></header>
     <div class="legend" id="legend"></div>
     <div class="day-tabs" role="tablist" id="dayTabs"></div>
     <div id="dayPanels"></div>
   </section>
 
   <section class="sec route" id="route">
-    <header class="sec-head"><p class="sec-no">03</p><h2>ルート</h2><p class="sec-sub"><span lang="zh-Hant">路線</span> · Route</p></header>
+    <header class="sec-head"><p class="sec-no">03</p><h2>ルート</h2><p class="sec-sub" lang="en">Route</p></header>
     <div class="routes" id="routes"></div>
   </section>
 
   <section class="sec spots" id="spots">
-    <header class="sec-head"><p class="sec-no">04</p><h2>見どころ</h2><p class="sec-sub"><span lang="zh-Hant">景點</span> · Places</p></header>
+    <header class="sec-head"><p class="sec-no">04</p><h2>見どころ</h2><p class="sec-sub" lang="en">Places</p></header>
     <div class="spot-grid" id="spotGrid"></div>
   </section>
 
   <section class="sec food dark-band" id="food">
-    <header class="sec-head"><p class="sec-no">05</p><h2>台南の味</h2><p class="sec-sub"><span lang="zh-Hant">台南美食</span> · Food</p></header>
-    <p class="food-lead">三人で小さな器をいくつも頼み、少しずつ分け合うのが台南流。<span lang="zh-Hant">三人點多樣、每樣吃一點，就是台南的吃法。</span></p>
+    <header class="sec-head"><p class="sec-no">05</p><h2>台南の味</h2><p class="sec-sub" lang="en">Food</p></header>
+    <p class="food-lead">三人で小さな器をいくつも頼み、少しずつ分け合うのが台南流。<span class="ed" lang="en">Order several small plates and share a little of each: that is how Tainan eats.</span></p>
     <div class="food-row" id="foodRow"></div>
   </section>
 
   <section class="sec stay" id="stay">
-    <header class="sec-head"><p class="sec-no">06</p><h2>宿泊</h2><p class="sec-sub"><span lang="zh-Hant">住宿</span> · Stay</p></header>
+    <header class="sec-head"><p class="sec-no">06</p><h2>宿泊</h2><p class="sec-sub" lang="en">Stay</p></header>
     <div class="stay-grid" id="stay-body"></div>
     <div class="reviews" id="stayReviews"></div>
   </section>
 
   <section class="sec transport" id="transport">
-    <header class="sec-head"><p class="sec-no">07</p><h2>移動と交通</h2><p class="sec-sub"><span lang="zh-Hant">交通</span> · Getting around</p></header>
+    <header class="sec-head"><p class="sec-no">07</p><h2>移動と交通</h2><p class="sec-sub" lang="en">Getting around</p></header>
     <dl class="tr-list" id="trList"></dl>
   </section>
 
   <section class="sec tips" id="tips">
-    <header class="sec-head"><p class="sec-no">08</p><h2>旅のヒント</h2><p class="sec-sub"><span lang="zh-Hant">旅行小提醒</span> · Tips</p></header>
+    <header class="sec-head"><p class="sec-no">08</p><h2>旅のヒント</h2><p class="sec-sub" lang="en">Tips</p></header>
     <div class="tip-grid" id="tipGrid"></div>
   </section>
 
   <section class="sec phrases" id="phrases">
-    <header class="sec-head"><p class="sec-no">09</p><h2>指さし中国語</h2><p class="sec-sub"><span lang="zh-Hant">實用中文</span> · Phrases</p></header>
-    <p class="phr-lead">タップすると大きく表示されます。お店の人に画面を見せてください。</p>
+    <header class="sec-head"><p class="sec-no">09</p><h2>指さし中国語</h2><p class="sec-sub" lang="en">Phrases</p></header>
+    <p class="phr-lead">タップすると大きく表示されます。お店の人に画面を見せてください。<span class="ed" lang="en">Tap a card to show it full screen, then show it to the shop staff.</span></p>
     <div class="phr-grid" id="phrGrid"></div>
   </section>
 
   <section class="sec check" id="checklist">
-    <header class="sec-head"><p class="sec-no">10</p><h2>出発前チェック</h2><p class="sec-sub"><span lang="zh-Hant">行前清單</span> · Checklist</p></header>
+    <header class="sec-head"><p class="sec-no">10</p><h2>出発前チェック</h2><p class="sec-sub" lang="en">Checklist</p></header>
     <div class="chk-grid" id="chkGrid"></div>
   </section>
 
   <section class="sec gallery" id="gallery">
-    <header class="sec-head"><p class="sec-no">11</p><h2>写真</h2><p class="sec-sub"><span lang="zh-Hant">相簿</span> · Gallery</p></header>
+    <header class="sec-head"><p class="sec-no">11</p><h2>写真</h2><p class="sec-sub" lang="en">Gallery</p></header>
     <div class="gal" id="gal"></div>
   </section>
 
   <section class="sec sources" id="sources">
-    <header class="sec-head"><p class="sec-no">12</p><h2>情報の出典</h2><p class="sec-sub"><span lang="zh-Hant">資料來源</span> · Sources</p></header>
+    <header class="sec-head"><p class="sec-no">12</p><h2>情報の出典</h2><p class="sec-sub" lang="en">Sources</p></header>
     <div class="src-wrap" id="srcBody"></div>
   </section>
 </main>
 
 <footer class="foot">
   <p class="foot-mark">台南</p>
-  <p>写真はすべて AI で生成したイメージです。<span lang="zh-Hant">照片皆為 AI 生成示意圖。</span> Photos are AI-generated illustrations.</p>
-  <p class="foot-small">情報は2026年11月時点。営業時間や料金は変わることがあります。</p>
+  <p>写真はすべて AI で生成したイメージです。<span lang="en">Photos are AI-generated illustrations.</span></p>
+  <p class="foot-small">情報は2026年11月時点。営業時間や料金は変わることがあります。<span lang="en">Information as of November 2026; hours and prices may change.</span></p>
 </footer>
 
 <div class="lightbox" id="lightbox" hidden>
@@ -149,7 +149,7 @@
     <p class="tv-day" id="tvDay"></p>
     <p class="tv-time" id="tvTime"></p>
     <h2 class="tv-title" id="tvTitle"></h2>
-    <p class="tv-zh" lang="zh-Hant" id="tvZh"></p>
+    <p class="tv-en" lang="en" id="tvEn"></p>
     <p class="tv-note" id="tvNote"></p>
     <div class="tv-actions">
       <a class="tv-go" id="tvGo" target="_blank" rel="noopener">Google マップで開く</a>
@@ -162,7 +162,7 @@
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-<script src="assets/js/data.js?v=9"></script>
-<script src="assets/js/app.js?v=9"></script>
+<script src="assets/js/data.js?v=10"></script>
+<script src="assets/js/app.js?v=10"></script>
 </body>
 </html>
